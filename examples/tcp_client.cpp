@@ -68,6 +68,11 @@ main(void) {
   client.connect("127.0.0.1", 3001);
   client.async_read({1024, std::bind(&on_new_message, std::ref(client), std::placeholders::_1)});
 
+  std::vector<char> a = {'a'};
+  tacopie::tcp_client::write_request request;
+  request.buffer = a;
+  client.async_write(request);
+
   signal(SIGINT, &signint_handler);
 
   std::mutex mtx;
